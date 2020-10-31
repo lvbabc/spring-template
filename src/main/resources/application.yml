@@ -1,0 +1,27 @@
+server:
+  port: 8080
+
+spring:
+  ##数据库
+  datasource:
+    url: jdbc:mysql://localhost:3306/spring-template?characterEncoding=utf8&useSSL=false
+    username: rex
+    password: rex
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath*:mapper/*Mapper.xml
+  type-aliases-package: com.rex.springtemplate.entity
+
+##日志级别
+logging:
+  level:
+    root: info
+    com:
+      rex:
+        springtemplate:
+          mapper: debug
+  file:
+    name: /Users/lvbing/log/spring-template.log
+    max-size: 10MB
+    max-history: 10
