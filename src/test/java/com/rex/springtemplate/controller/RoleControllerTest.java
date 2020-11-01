@@ -1,5 +1,7 @@
 package com.rex.springtemplate.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rex.springtemplate.entity.Role;
 import com.rex.springtemplate.service.RoleService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -8,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -35,11 +39,18 @@ class RoleControllerTest {
     @Test
     void createRole() throws Exception {
         Mockito.when(roleService.createRole(Mockito.any())).thenReturn("Mock Role");
+        Role role = new Role();
+        role.setRoleName("test");
 
-        this.mockMvc.perform(post("/role/"))
+        String requestJson = new ObjectMapper().writeValueAsString(role);
+
+        MockHttpServletRequestBuilder mockHttpServletRequestBuilder = post("/role/")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(requestJson);
+
+        this.mockMvc.perform(mockHttpServletRequestBuilder)
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string("Mock Role"));
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
