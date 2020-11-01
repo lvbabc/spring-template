@@ -9,6 +9,12 @@ public class ResultVO<T> {
     private String msg;
     private T data;
 
+    public ResultVO(Integer code, String msg, T data) {
+        this.code = code;
+        this.msg = msg;
+        this.data = data;
+    }
+
     public ResultVO(T data) {
         this(ResultCode.SUCCESS, data);
     }

@@ -1,5 +1,6 @@
 package com.rex.springtemplate.controller;
 
+import com.rex.springtemplate.annotation.NotResponseBody;
 import com.rex.springtemplate.entity.User;
 import com.rex.springtemplate.service.UserService;
 import io.swagger.annotations.ApiOperation;
@@ -27,6 +28,7 @@ public class UserController {
 
     @ApiOperation("查询用户")
     @GetMapping(path = "/{id}")
+    @NotResponseBody
     public User getUser(@PathVariable Long id) {
         return userService.getUser(id);
     }
